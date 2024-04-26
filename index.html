@@ -13,11 +13,6 @@
     // Initialize Instascan scanner
     let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
 
-    // Callback function when a barcode is detected
-    scanner.addListener('scan', function (content) {
-      alert('Barcode detected: ' + content);
-    });
-
     // Start the rear camera feed
     Instascan.Camera.getCameras().then(function (cameras) {
       let rearCamera = cameras.find(camera => camera.name.toLowerCase().includes('back') || camera.name.toLowerCase().includes('rear'));
@@ -28,6 +23,13 @@
       }
     }).catch(function (e) {
       console.error(e);
+    });
+
+    // Listen for scan event
+    scanner.addListener('scan', function (content) {
+      alert('Barcode detected: ' + content);
+      // Stop scanning after detecting a barcode (optional)
+      scanner.stop();
     });
   </script>
 </body>
