@@ -1,42 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Barcode Scanner</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barcode Scanner</title>
 </head>
 <body>
-  <h1>Barcode Scanner</h1>
-  <video id="preview" width="100%" height="auto"></video>
-  <script src="https://unpkg.com/@zxing/library@latest"></script>
-  <script>
-    // Get the video element
-    const videoElement = document.getElementById('preview');
-    
-    // Initialize the barcode scanner
-    const codeReader = new ZXing.BrowserBarcodeReader();
+    <div id="barcodeScanner">
+        <video id="cameraPreview" width="100%"></video>
+        <div id="result"></div>
+    </div>
 
-    // Start the rear camera feed
-    navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
-      .then(function(stream) {
-        videoElement.srcObject = stream;
-        videoElement.play();
-      })
-      .catch(function(err) {
-        console.error('Error accessing the camera.', err);
-      });
-
-    // Listen for scan event
-    codeReader.decodeFromVideoDevice(null, 'video', (result, err) => {
-      if (result) {
-        alert('Barcode detected: ' + result.text);
-        // Stop scanning after detecting a barcode (optional)
-        codeReader.stopContinuousDecode();
-      }
-      if (err && !(err instanceof ZXing.NotFoundException)) {
-        console.error('Error decoding barcode:', err);
-      }
-    });
-  </script>
+    <script src="https://cdn.jsdelivr.net/npm/quagga/dist/quagga.min.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
